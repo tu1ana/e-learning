@@ -1,0 +1,74 @@
+[
+  {
+    "model": "course.payment",
+    "pk": 1,
+    "fields": {
+      "user": 4,
+      "pay_day": "2022-03-17T10:46:33.752Z",
+      "paid_course": 1,
+      "paid_lesson": 3,
+      "paid_amt": 1500.0,
+      "payment_option": "WIRE"
+    }
+  },
+  {
+    "model": "course.payment",
+    "pk": 2,
+    "fields": {
+      "user": 6,
+      "pay_day": "2020-02-02T06:50:09.752Z",
+      "paid_course": 1,
+      "paid_lesson": 2,
+      "paid_amt": 2000.0,
+      "payment_option": "CASH"
+    }
+  },
+  {
+    "model": "course.payment",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "pay_day": "2021-09-03T11:13:20.752Z",
+      "paid_course": 2,
+      "paid_lesson": 5,
+      "paid_amt": 1700.0,
+      "payment_option": "CASH"
+    }
+  },
+  {
+    "model": "course.payment",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "pay_day": "2019-01-19T12:09:11.752Z",
+      "paid_course": 1,
+      "paid_lesson": 3,
+      "paid_amt": 1500.0,
+      "payment_option": "WIRE"
+    }
+  },
+  {
+    "model": "course.payment",
+    "pk": 5,
+    "fields": {
+      "user": 1,
+      "pay_day": "2023-11-03T08:27:11.082Z",
+      "paid_course": 1,
+      "paid_lesson": 2,
+      "paid_amt": 2000.0,
+      "payment_option": "CASH"
+    }
+  },
+  {
+    "model": "course.payment",
+    "pk": 6,
+    "fields": {
+      "user": 2,
+      "pay_day": "2022-07-24T22:26:28.082Z",
+      "paid_course": 4,
+      "paid_lesson": 1,
+      "paid_amt": 1000.0,
+      "payment_option": "WIRE"
+    }
+  }
+]
