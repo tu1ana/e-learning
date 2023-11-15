@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from rest_framework.viewsets import ModelViewSet
 
 from course.models import Course, Lesson
-from course.serializers import CourseSerializer, LessonSerializer, CourseListSerializer
+from course.serializers import CourseSerializer, LessonSerializer, CourseListSerializer, CourseDetailSerializer
 
 
 class CourseViewSet(ModelViewSet):
@@ -12,7 +12,7 @@ class CourseViewSet(ModelViewSet):
 
     serializers = {  # custom dict
         'list': CourseListSerializer,
-        # 'retrieve':
+        'retrieve': CourseDetailSerializer
     }
 
     def get_serializer_class(self):

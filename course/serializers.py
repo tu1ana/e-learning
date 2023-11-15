@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.fields import IntegerField
+from rest_framework.fields import IntegerField, SerializerMethodField
 
 from course.models import Course, Lesson
 
@@ -16,6 +16,17 @@ class CourseListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('name', 'description', 'lesson_count')
+
+
+class CourseDetailSerializer(serializers.ModelSerializer):
+    lessons_list = SerializerMethodField()
+
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+    def get_lessons_list(self, instance):
+        return LessonSerializer(Lesson.objects.filter(course=instance), many=True).data
 
 
 class LessonSerializer(serializers.ModelSerializer):
