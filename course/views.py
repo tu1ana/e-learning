@@ -1,13 +1,26 @@
+from django.db.models import Count
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from course.models import Course, Lesson
-from course.serializers import CourseSerializer, LessonSerializer
+from course.serializers import CourseSerializer, LessonSerializer, CourseListSerializer
 
 
 class CourseViewSet(ModelViewSet):
-    serializer_class = CourseSerializer
+    default_serializer = CourseSerializer
     queryset = Course.objects.all()
+
+    serializers = {  # custom dict
+        'list': CourseListSerializer,
+        # 'retrieve':
+    }
+
+    def get_serializer_class(self):
+        return self.serializers.get(self.action, self.default_serializer)
+
+    def list(self, request, *args, **kwargs):
+        self.queryset = self.queryset.annotate(lesson_count=Count('lessons'))
+        return super().list(request, *args, **kwargs)
 
 
 class LessonListAPIView(ListAPIView):
