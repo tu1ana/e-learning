@@ -8,6 +8,8 @@ class Course(models.Model):
     thumbnail = models.ImageField(upload_to='courses/', **NULLABLE, verbose_name='Превью изображения')
     description = models.TextField(**NULLABLE, verbose_name='Описание')
 
+    student = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='courses', verbose_name='Студент')
+
     def __str__(self):
         return self.name
 
@@ -23,6 +25,8 @@ class Lesson(models.Model):
     link_to_vid = models.CharField(max_length=75, **NULLABLE, verbose_name='Ссылка на видео')
 
     course = models.ForeignKey(Course, related_name='lessons', on_delete=models.CASCADE, verbose_name='Курс')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='lessons',
+                                verbose_name='Студент')
 
     def __str__(self):
         return self.name
