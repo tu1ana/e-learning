@@ -2,9 +2,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from course.models import Course, Lesson, Payment
+from course.permissions import IsModerator, IsAdmin, IsStudent, IsStudentOrStaff
 from course.serializers import CourseSerializer, LessonSerializer, CourseListSerializer, CourseDetailSerializer, \
     PaymentSerializer
 
@@ -12,6 +14,7 @@ from course.serializers import CourseSerializer, LessonSerializer, CourseListSer
 class CourseViewSet(ModelViewSet):
     default_serializer = CourseSerializer
     queryset = Course.objects.all()
+    permission_classes = [IsAuthenticated, IsStudentOrStaff]
 
     serializers = {  # custom dict
         'list': CourseListSerializer,
@@ -29,24 +32,29 @@ class CourseViewSet(ModelViewSet):
 class LessonListAPIView(ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated]
 
 
 class LessonRetrieveAPIView(RetrieveAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsStudent]
 
 
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated, IsAdmin]
 
 
 class LessonUpdateAPIView(UpdateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsModerator | IsStudent]
 
 
 class LessonDestroyAPIView(DestroyAPIView):
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsAdmin]
 
 
 class PaymentListAPIView(ListAPIView):
