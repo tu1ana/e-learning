@@ -1,7 +1,15 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, SerializerMethodField
 
-from course.models import Course, Lesson, Payment
+from course.models import Course, Lesson, Payment, Subscription
+from course.validators import youtube_validator
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -24,6 +32,7 @@ class CourseListSerializer(serializers.ModelSerializer):
 
 class CourseDetailSerializer(serializers.ModelSerializer):
     lessons_list = SerializerMethodField()
+    is_subscribed = SerializerMethodField(read_only=True, source='subscription')
 
     class Meta:
         model = Course
@@ -32,8 +41,15 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     def get_lessons_list(self, instance):
         return LessonSerializer(Lesson.objects.filter(course=instance), many=True).data
 
+    def get_is_subscribed(self, instance):
+        if instance.subscription.filter(is_active=True):
+            return True
+        return False
+
 
 class LessonSerializer(serializers.ModelSerializer):
+    link_to_vid = serializers.CharField(validators=[youtube_validator])
+
     class Meta:
         model = Lesson
         fields = '__all__'
