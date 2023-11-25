@@ -48,3 +48,17 @@ class Payment(models.Model):
     paid_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, **NULLABLE, related_name='payments', verbose_name='Оплаченный урок')
     paid_amt = models.FloatField(verbose_name='Сумма оплаты')
     payment_option = models.CharField(max_length=4, choices=PAYMENT_CHOICES, verbose_name='Способ оплаты')
+
+
+class Subscription(models.Model):
+    is_active = models.BooleanField(default=False, verbose_name='Активна')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subscription', verbose_name='Курс')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscription', verbose_name='Студент')
+
+    def __str__(self):
+        return f'Подписка на курс {self.course} {self.is_active}'
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        unique_together = ['student', 'course']
