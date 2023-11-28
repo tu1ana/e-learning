@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, SerializerMethodField
 
 from course.models import Course, Lesson, Payment, Subscription
+from course.services import checkout_link
 from course.validators import youtube_validator
 
 
@@ -56,6 +57,11 @@ class LessonSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
+    checkout_link = serializers.SerializerMethodField()
+
     class Meta:
         model = Payment
         fields = '__all__'
+
+    def get_checkout_link(self, instance):
+        return checkout_link(instance)
