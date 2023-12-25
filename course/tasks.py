@@ -27,6 +27,7 @@ def send_course_update(pk):
 
 @shared_task
 def block_user():
+    """ Функция блокровки пользователя, если дата последнего посещения более 30 дней назад """
     current_time = datetime.datetime.now()
     user = User.objects.all()
     difference = current_time - user.last_login
