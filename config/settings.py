@@ -87,9 +87,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'e_learning',
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD')
+        'NAME': 'e_learning_docker',
+        'USER': 'postgres',
+        # 'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': 'timur',
+        # 'PASSWORD': os.getenv('DATABASE_PASSWORD')
+        'HOST': 'db'
     }
 }
 
@@ -155,8 +158,7 @@ SIMPLE_JWT = {
 
 STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_BROKER_URL = 'redis://127.0.0:6379/0'
+CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_TIMEZONE = "Europe/Moscow"
 
 EMAIL_HOST = 'smtp.yandex.ru'
