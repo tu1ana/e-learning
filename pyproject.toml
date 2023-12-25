@@ -17,7 +17,7 @@ djangorestframework-simplejwt = "^5.3.0"
 coverage = "^7.3.2"
 stripe = "^7.6.0"
 python-dotenv = "^1.0.0"
-eventlet = "^0.33.3"
+eventlet = "^0.34.2"
 redis = "^5.0.1"
 
 
