@@ -88,10 +88,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'e_learning_docker',
-        'USER': 'postgres',
-        # 'USER': os.getenv('DATABASE_USER'),
+        # 'USER': 'postgres',
+        'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': 'timur',
-        # 'PASSWORD': os.getenv('DATABASE_PASSWORD')
+        # 'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': 'db'
     }
 }
