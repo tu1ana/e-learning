@@ -153,3 +153,27 @@ https://stripe.com/docs/terminal/references/testing#standard-test-cards
 ### Задание 3
 С помощью `celery-beat` реализуйте фоновую задачу, которая будет проверять пользователей по дате последнего входа по полю 
 `last_login` и, если пользователь не заходил более месяца, блокировать его с помощью флага `is_active`.
+----------------------------------------------------------------------------
+Запуск проекта с помощью `docker compose`
+----------------------------------------------------------------------------
+### Стек технологий:
+________________________________________________________________
+* Python 
+* Django
+* Django REST Framework
+* Docker
+* Docker compose
+* PostgreSQL
+* Redis
+* Celery
+
+### Запуск проекта:
+________________________________________________________________
+1. Установите 
+    Docker и Docker Compose https://docs.docker.com/engine/install/
+    Redis https://redis.io/docs/install/install-redis/
+2. Клонируйте этот репозиторий `git clone git@github.com:tu1ana/e-learning.git`
+3. Перейдите в корень проекта и выполните команды 
+    `docker compose build`
+    `docker compose up`
+4. Перейдите по ссылке в терминале http://localhost:8000/
