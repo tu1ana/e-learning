@@ -1,6 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -11,6 +10,7 @@ from course.paginators import ThePaginator
 from course.permissions import IsModerator, IsAdmin, IsStudent, IsStudentOrStaff
 from course.serializers import CourseSerializer, LessonSerializer, CourseListSerializer, CourseDetailSerializer, \
     PaymentSerializer, SubscriptionSerializer
+from course.tasks import send_course_update
 
 
 class CourseViewSet(ModelViewSet):
@@ -30,6 +30,18 @@ class CourseViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         self.queryset = self.queryset.annotate(lesson_count=Count('lessons'))
         return super().list(request, *args, **kwargs)
+
+#     def perform_update(self, serializer):
+#         serializer.save()
+#
+#     def partial_update(self, request, *args, **kwargs):
+#         kwargs['partial'] = True
+#         return self.update(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+
+        send_course_update(course.pk)
 
 
 class LessonListAPIView(ListAPIView):
