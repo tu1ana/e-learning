@@ -1,8 +1,11 @@
+import datetime
+
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
 
 from course.models import Subscription
+from users.models import User
 
 
 @shared_task
@@ -20,3 +23,13 @@ def send_course_update(pk):
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=email_list
     )
+
+
+@shared_task
+def block_user():
+    current_time = datetime.datetime.now()
+    user = User.objects.all()
+    difference = current_time - user.last_login
+    if difference > datetime.timedelta(days=30):
+        user.is_active = False
+        user.save()
